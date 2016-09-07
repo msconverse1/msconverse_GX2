@@ -49,16 +49,36 @@ namespace DX11UWA
 		uint32	m_indexCount;
 
 		// Direct3D resources for floor geometry.
-		Microsoft::WRL::ComPtr<ID3D11InputLayout>	floor_inputLayout;
+		Microsoft::WRL::ComPtr<ID3D11InputLayout>	m_inputLayout_PUN;
+		Microsoft::WRL::ComPtr<ID3D11VertexShader>	m_vertexShader_PUN;
+		Microsoft::WRL::ComPtr<ID3D11PixelShader>	m_pixelShader_PUN;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		floor_vertexBuffer;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		floor_indexBuffer;
-		Microsoft::WRL::ComPtr<ID3D11VertexShader>	floor_vertexShader;
-		Microsoft::WRL::ComPtr<ID3D11PixelShader>	floor_pixelShader;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		floor_constantBuffer;
-
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		floor_constantBufferDlight;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		floor_constantBufferPlight;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		floor_constantBufferSlight;
+		Dirlight                                    Dlightdata;
+		pointlight                                  Plightdata;
+		Spot                                        Slightdata;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		m_vertexBuffer_new_Cube;
+		UINT										m_num_verts_cube;
 		// System resources for floor geometry.
 		ModelViewProjectionConstantBuffer	floor_constantBufferData;
 		uint32	floor_indexCount;
+
+		//Model loading
+		// Direct3D resources for cube geometry.
+		Microsoft::WRL::ComPtr<ID3D11InputLayout>	SDF1_inputLayout;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		SDF1_vertexBuffer;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		SDF1_indexBuffer;
+		Microsoft::WRL::ComPtr<ID3D11VertexShader>	SDF1_vertexShader;
+		Microsoft::WRL::ComPtr<ID3D11PixelShader>	SDF1_pixelShader;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		SDF1_constantBuffer;
+
+		// System resources for cube geometry.
+		ModelViewProjectionConstantBuffer	SDF1_constantBufferData;
+		uint32	SDF1_indexCount;
 
 		// Variables used with the rendering loop.
 		bool	m_loadingComplete;

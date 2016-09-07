@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+using namespace DirectX;
 namespace DX11UWA
 {
 	// Constant buffer used to send MVP matrices to the vertex shader.
@@ -22,5 +22,28 @@ namespace DX11UWA
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT3 uv;
 		DirectX::XMFLOAT3 normal;
+	};
+
+	struct Dirlight
+	{
+		XMFLOAT4 direction;
+		XMFLOAT4 color;
+	};
+	struct pointlight
+	{
+		XMFLOAT4 pos;
+		XMFLOAT4 color;
+		XMFLOAT4 rad;
+	};
+	struct Spot
+	{
+		XMFLOAT4 pos;
+		XMFLOAT4 SurfaceRatio;
+		XMFLOAT4 SpotFactor;
+		XMFLOAT4 light_rad;
+		XMFLOAT4 outerCon;
+		XMFLOAT4 innerCon;
+		XMFLOAT4 ConeDir;
+		XMFLOAT4 color;
 	};
 }
