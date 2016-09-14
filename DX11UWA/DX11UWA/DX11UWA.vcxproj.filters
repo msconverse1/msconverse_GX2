@@ -99,10 +99,21 @@
     <ClInclude Include="Common\StepTimer.h">
       <Filter>Common\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="modelloader.h" />
+    <ClInclude Include="modelloader.h">
+      <Filter>Content\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\rock.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Skyboxtexture.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\vba1b.dds">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
@@ -111,8 +122,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DX11UWA_TemporaryKey.pfx" />
-    <None Include="Assets\SDF1.obj" />
-    <None Include="Assets\tomahawk.obj" />
+    <None Include="Assets\asteroid.obj">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\tomahawk.obj">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\SDF1.obj">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\GallacticCruiser.obj">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">
@@ -127,10 +148,20 @@
     <FxCompile Include="Content\PUN_VertexShader.hlsl">
       <Filter>Content\Shaders</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Assets\asteroid.obj">
-      <Filter>Assets</Filter>
-    </Object>
+    <FxCompile Include="Content\SB_VertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\SB_PixelShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\INTVertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\FlagGeometryShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\GS_VertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
