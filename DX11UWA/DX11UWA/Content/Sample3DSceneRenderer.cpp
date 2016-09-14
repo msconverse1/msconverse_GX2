@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "Sample3DSceneRenderer.h"
-
+#include "modelloader.h"
 #include "..\Common\DirectXHelper.h"
 
 using namespace DX11UWA;
@@ -55,7 +55,7 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources(void)
 	XMStoreFloat4x4(&m_constantBufferData.projection, XMMatrixTranspose(perspectiveMatrix * orientationMatrix));
 
 	// Eye is at (0,0.7,1.5), looking at point (0,-0.1,0) with the up-vector along the y-axis.
-	static const XMVECTORF32 eye = { 0.0f, 0.7f, -1.5f, 0.0f };
+	static const XMVECTORF32 eye = { 0.0f, 2.7f, -10.5f, 0.0f };
 	static const XMVECTORF32 at = { 0.0f, -0.1f, 0.0f, 0.0f };
 	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
@@ -214,52 +214,87 @@ void Sample3DSceneRenderer::Render(void)
 	}
 
 	auto context = m_deviceResources->GetD3DDeviceContext();
-	//cube
+
 	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_camera))));
-	
 
 	// Prepare the constant buffer to send it to the graphics device.
 	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
+	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
+	context->UpdateSubresource1(floor_constantBufferSlight.Get(), 0, NULL, &Slightdata, 0, 0, 0);
+	context->UpdateSubresource1(floor_constantBufferPlight.Get(), 0, NULL, &Plightdata, 0, 0, 0);
+	
 	// Each vertex is one instance of the VertexPositionColor struct.
-	UINT stride = sizeof(VertexPositionColor);
+	UINT stride = sizeof(VertexPositionUVNormal);
 	UINT offset = 0;
-	context->IASetVertexBuffers(0, 1, m_vertexBuffer.GetAddressOf(), &stride, &offset);
+	context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
 	// Each index is one 16-bit unsigned integer (short).
-	context->IASetIndexBuffer(m_indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(m_inputLayout.Get());
+	context->IASetInputLayout(m_inputLayout_PUN.Get());
 	// Attach our vertex shader.
-	context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
+	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
 	// Send the constant buffer to the graphics device.
 	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
 	// Attach our pixel shader.
-	context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
-	// Draw the objects.
-	context->DrawIndexed(m_indexCount, 0, 0);
-	
-	// normal mapping of view 
-	XMStoreFloat4x4(&floor_constantBufferData.view, XMMatrixTranspose(XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_camera))));
-	floor_constantBufferData.projection = m_constantBufferData.projection;
-	//floor
-	XMStoreFloat4x4(&floor_constantBufferData.model, XMMatrixIdentity());
-	// Prepare the constant buffer to send it to the graphics device.
-	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &floor_constantBufferData, 0, 0, 0);
-	// Each vertex is one instance of the VertexPositionColor struct.
+	context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
+	context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
+	context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
 
-	context->IASetVertexBuffers(0, 1, floor_vertexBuffer.GetAddressOf(), &stride, &offset);
-	// Each index is one 16-bit unsigned integer (short).
-	context->IASetIndexBuffer(floor_indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(m_inputLayout.Get());
-	// Attach our vertex shader.
-	context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
-	// Send the constant buffer to the graphics device.
-	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	// Attach our pixel shader.
-	context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+
+	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
 	// Draw the objects.
-	context->DrawIndexed(floor_indexCount, 0, 0);
-	
+	context->Draw(m_num_verts_cube, 0);
+
+
+	// Creation for the floor
+	Dlightdata.color = XMFLOAT4(0.0f, 1.0f,0.0f, 0.0f);
+	Dlightdata.direction = XMFLOAT4(0.0f, -1.0f, 0.0f, 0.0f);
+	//point light creation light on rightside of cube
+	Plightdata.color = XMFLOAT4(1.0f, 1.0f, 0.0f, 0.0f);
+	Plightdata.pos = XMFLOAT4(0.0, 1.0, -1.0f, 0.0f);
+	Plightdata.rad = XMFLOAT4(2.0f, 0.0f, 0.0f, 0.0f);
+	//Spot light creation
+	Slightdata.color = XMFLOAT4(0.0f, 1.0f, 1.0f, 0.0f);
+	Slightdata.innerCon = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+	Slightdata.outerCon = XMFLOAT4(0.5f, 0.0f, 0.0f, 0.0f);
+	Slightdata.light_rad = XMFLOAT4(2.5f, 0.0f, 0.0f, 0.0f);
+	Slightdata.pos = XMFLOAT4(2.0f, -1.5f, 0.0f, 0.0f);
+	//moves the cube 
+	//XMStoreFloat4x4(&m_constantBufferData.model, XMMatrixMultiply( XMMatrixTranspose(XMMatrixTranslation(0.0f, -3.0f, 0.0f)),XMLoadFloat4x4(&m_constantBufferData.model)));
+	XMStoreFloat4x4(&m_constantBufferData.model,XMMatrixTranspose(XMMatrixTranslation(0.0f, -3.0f, 0.0f)));
+
+	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
+	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
+	context->UpdateSubresource1(floor_constantBufferSlight.Get(), 0, NULL, &Slightdata, 0, 0, 0);
+	context->UpdateSubresource1(floor_constantBufferPlight.Get(), 0, NULL, &Plightdata, 0, 0, 0);
+	stride = sizeof(VertexPositionUVNormal);
+	offset = 0;
+	context->IASetVertexBuffers(0, 1, floor_vertexBuffer.GetAddressOf(), &stride, &offset);
+	context->IASetIndexBuffer(floor_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetInputLayout(m_inputLayout_PUN.Get());
+	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
+	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+	context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
+	context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
+	context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
+	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+	context->DrawIndexed(6, 0, 0);
+
+	//Model 
+	SDF1_constantBufferData.view = m_constantBufferData.view;
+	SDF1_constantBufferData.projection = m_constantBufferData.projection;
+	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixIdentity());
+	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(3.0f, -0.0f, 0.0f)));
+	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &SDF1_constantBufferData, 0, 0, 0);
+	context->IASetVertexBuffers(0, 1, SDF1_vertexBuffer.GetAddressOf(), &stride, &offset);
+	context->IASetIndexBuffer(SDF1_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetInputLayout(m_inputLayout_PUN.Get());
+	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
+	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+	context->DrawIndexed(SDF1_indexCount, 0, 0);
+
 }
 
 void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
@@ -267,7 +302,6 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 	// Load shaders asynchronously.
 	auto loadVSTask = DX::ReadDataAsync(L"SampleVertexShader.cso");
 	auto loadPSTask = DX::ReadDataAsync(L"SamplePixelShader.cso");
-
 	// After the vertex shader file is loaded, create the shader and input layout.
 	auto createVSTask = loadVSTask.then([this](const std::vector<byte>& fileData)
 	{
@@ -281,7 +315,6 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 
 		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateInputLayout(vertexDesc, ARRAYSIZE(vertexDesc), &fileData[0], fileData.size(), &m_inputLayout));
 	});
-
 	// After the pixel shader file is loaded, create the shader and constant buffer.
 	auto createPSTask = loadPSTask.then([this](const std::vector<byte>& fileData)
 	{
@@ -290,111 +323,215 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 		CD3D11_BUFFER_DESC constantBufferDesc(sizeof(ModelViewProjectionConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
 		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&constantBufferDesc, nullptr, &m_constantBuffer));
 	});
-
-	//Creating Floor 
-	auto createFloor = (createPSTask && createVSTask).then([this]()
-	{
-		static const VertexPositionColor floorVert[]=
-		{
-			{ XMFLOAT3(-10.9f, -0.01f, -10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(-10.9f, -0.01f,  10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(-10.9f,  0.01f, -10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(-10.9f,  0.01f,  10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(10.9f, -0.01f, -10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(10.9f, -0.01f,  10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(10.9f,  0.01f, -10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(10.9f,  0.01f,  10.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-		};
-		D3D11_SUBRESOURCE_DATA vertBufferData = { 0 };
-		vertBufferData.pSysMem = floorVert;
-		vertBufferData.SysMemPitch = 0;
-		vertBufferData.SysMemSlicePitch = 0;
-		CD3D11_BUFFER_DESC vertBufferDesc(sizeof(floorVert), D3D11_BIND_VERTEX_BUFFER);
-		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&vertBufferDesc, &vertBufferData, &floor_vertexBuffer));
-
-		static const unsigned short floorIndices[] =
-		{
-			0,1,2,1,3,2,//-x
-			4,6,5,5,6,7,//+x
-			0,5,1,0,4,5, // -y
-			2,7,6,2,3,7, // +y
-			0,6,4,0,2,6, // -z
-			1,7,3,1,5,7, // +z
-		};
-		floor_indexCount = ARRAYSIZE(floorIndices);
-
-		D3D11_SUBRESOURCE_DATA indBufferData = { 0 };
-		indBufferData.pSysMem = floorIndices;
-		indBufferData.SysMemPitch = 0;
-		indBufferData.SysMemSlicePitch = 0;
-		CD3D11_BUFFER_DESC indBufferDesc(sizeof(floorIndices), D3D11_BIND_INDEX_BUFFER);
-		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&indBufferDesc, &indBufferData, &floor_indexBuffer));
-	});
-	createFloor.then([this]()
-	{
-		floor_loadingComplete = true;
-	});
 	// Once both shaders are loaded, create the mesh.
-	auto createCubeTask = (createPSTask && createVSTask).then([this]()
+	//auto createCubeTask = (createPSTask && createVSTask).then([this]()
+	//{
+	//	// Load mesh vertices. Each vertex has a position and a color.
+	//	static const VertexPositionColor cubeVertices[] =
+	//	{
+	//		{ XMFLOAT3(-0.5f, -0.5f, -0.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
+	//		{ XMFLOAT3(-0.5f, -0.5f,  0.5f), XMFLOAT3(0.0f, 0.0f, 1.0f) },
+	//		{ XMFLOAT3(-0.5f,  0.5f, -0.5f), XMFLOAT3(0.0f, 1.0f, 0.0f) },
+	//		{ XMFLOAT3(-0.5f,  0.5f,  0.5f), XMFLOAT3(0.0f, 1.0f, 1.0f) },
+	//		{ XMFLOAT3(0.5f, -0.5f, -0.5f), XMFLOAT3(1.0f, 0.0f, 0.0f) },
+	//		{ XMFLOAT3(0.5f, -0.5f,  0.5f), XMFLOAT3(1.0f, 0.0f, 1.0f) },
+	//		{ XMFLOAT3(0.5f,  0.5f, -0.5f), XMFLOAT3(1.0f, 1.0f, 0.0f) },
+	//		{ XMFLOAT3(0.5f,  0.5f,  0.5f), XMFLOAT3(1.0f, 1.0f, 1.0f) },
+	//	};
+
+	//	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
+	//	vertexBufferData.pSysMem = cubeVertices;
+	//	vertexBufferData.SysMemPitch = 0;
+	//	vertexBufferData.SysMemSlicePitch = 0;
+	//	CD3D11_BUFFER_DESC vertexBufferDesc(sizeof(cubeVertices), D3D11_BIND_VERTEX_BUFFER);
+	//	DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &m_vertexBuffer));
+
+	//	// Load mesh indices. Each trio of indices represents
+	//	// a triangle to be rendered on the screen.
+	//	// For example: 0,2,1 means that the vertices with indexes
+	//	// 0, 2 and 1 from the vertex buffer compose the 
+	//	// first triangle of this mesh.
+	//	static const unsigned short cubeIndices[] =
+	//	{
+	//		0,1,2,1,3,2,// -x
+	//		4,6,5,5,6,7,// +x
+	//		0,5,1,0,4,5,// -y
+	//		2,7,6,2,3,7,// +y
+	//		0,6,4,0,2,6,// -z
+	//		1,7,3,1,5,7,// +z
+	//	};
+
+	//	m_indexCount = ARRAYSIZE(cubeIndices);
+
+	//	D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
+	//	indexBufferData.pSysMem = cubeIndices;
+	//	indexBufferData.SysMemPitch = 0;
+	//	indexBufferData.SysMemSlicePitch = 0;
+	//	CD3D11_BUFFER_DESC indexBufferDesc(sizeof(cubeIndices), D3D11_BIND_INDEX_BUFFER);
+	//	DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&indexBufferDesc, &indexBufferData, &m_indexBuffer));
+	//});
+
+	// Add code to current
+	auto loadVSTaskPUN = DX::ReadDataAsync(L"PUN_VertexShader.cso");
+	auto loadPSTaskPUN = DX::ReadDataAsync(L"PUN_PixelShader.cso");
+	auto createVSTaskPUN = loadVSTaskPUN.then([this](const std::vector<byte>& fileData)
 	{
-		// Load mesh vertices. Each vertex has a position and a color.
-		static const VertexPositionColor cubeVertices[] =
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateVertexShader(&fileData[0], fileData.size(), nullptr, &m_vertexShader_PUN));
+
+		static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
 		{
-			{XMFLOAT3(-0.5f, -0.5f, -0.5f), XMFLOAT3(0.0f, 0.0f, 0.0f)},
-			{XMFLOAT3(-0.5f, -0.5f,  0.5f), XMFLOAT3(0.0f, 0.0f, 1.0f)},
-			{XMFLOAT3(-0.5f,  0.5f, -0.5f), XMFLOAT3(0.0f, 1.0f, 0.0f)},
-			{XMFLOAT3(-0.5f,  0.5f,  0.5f), XMFLOAT3(0.0f, 1.0f, 1.0f)},
-			{XMFLOAT3( 0.5f, -0.5f, -0.5f), XMFLOAT3(1.0f, 0.0f, 0.0f)},
-			{XMFLOAT3( 0.5f, -0.5f,  0.5f), XMFLOAT3(1.0f, 0.0f, 1.0f)},
-			{XMFLOAT3( 0.5f,  0.5f, -0.5f), XMFLOAT3(1.0f, 1.0f, 0.0f)},
-			{XMFLOAT3( 0.5f,  0.5f,  0.5f), XMFLOAT3(1.0f, 1.0f, 1.0f)},
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "UV", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
+
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateInputLayout(vertexDesc, ARRAYSIZE(vertexDesc), &fileData[0], fileData.size(), &m_inputLayout_PUN));
+
+	});
+	auto createPSTaskPUN = loadPSTaskPUN.then([this](const std::vector<byte>& fileData)
+	{
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreatePixelShader(&fileData[0], fileData.size(), nullptr, &m_pixelShader_PUN));
+
+	});
+	auto create_FloorTask = (createPSTaskPUN && createVSTaskPUN).then([this]()
+	{
+		// create the verts and indicies
+		const VertexPositionUVNormal floor_vertices[4] =
+		{
+			{ XMFLOAT3(-12.0f, 0.0f,  12.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f) },
+			{ XMFLOAT3( 12.0f, 0.0f,  12.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f) },
+			{ XMFLOAT3(-12.0f, 0.0f, -12.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f) },
+			{ XMFLOAT3( 12.0f, 0.0f, -12.0f), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f) }
+		};
+
+		XMFLOAT3 frontTL = XMFLOAT3(-1.0f,  1.0f, -1.0f);
+		XMFLOAT3 frontTR = XMFLOAT3( 1.0f,  1.0f, -1.0f);
+		XMFLOAT3 frontBL = XMFLOAT3(-1.0f, -1.0f, -1.0f);
+		XMFLOAT3 frontBR = XMFLOAT3( 1.0f, -1.0f, -1.0f);
+
+		XMFLOAT3 backTL = XMFLOAT3(-1.0f,  1.0f, 1.0f);
+		XMFLOAT3 backTR = XMFLOAT3( 1.0f,  1.0f, 1.0f);
+		XMFLOAT3 backBL = XMFLOAT3(-1.0f, -1.0f, 1.0f);
+		XMFLOAT3 backBR = XMFLOAT3( 1.0f, -1.0f, 1.0f);
+
+		XMFLOAT3 frontN = XMFLOAT3( 0.0f, 0.0f, -1.0f);
+		XMFLOAT3 rightN = XMFLOAT3( 1.0f, 0.0f,  0.0f);
+		XMFLOAT3 backN =  XMFLOAT3( 0.0f, 0.0f,  1.0f);
+		XMFLOAT3 leftN =  XMFLOAT3(-1.0f, 0.0f,  0.0f);
+		XMFLOAT3 topN =  XMFLOAT3( 0.0f,  1.0f,  0.0f);
+		XMFLOAT3 botN =  XMFLOAT3( 0.0f, -1.0f,  0.0f);
+
+		XMFLOAT3 uvTL = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		XMFLOAT3 uvTR = XMFLOAT3(1.0f, 0.0f, 0.0f);
+		XMFLOAT3 uvBL = XMFLOAT3(0.0f, 1.0f, 0.0f);
+		XMFLOAT3 uvBR = XMFLOAT3(1.0f, 1.0f, 0.0f);
+
+		const VertexPositionUVNormal new_cube_verts[] =
+		{
+			{ frontTL, uvTL, frontN },	// 0
+			{ frontTR, uvTR, frontN },	// 1
+			{ frontBL, uvBL, frontN },	// 2
+
+			{ frontTR, uvTR, frontN },	// 1
+			{ frontBR, uvBR, frontN },	// 3
+			{ frontBL, uvBL, frontN },	// 2
+
+			{ frontTR, uvTL, rightN },	// 4
+			{ backTR, uvTR, rightN },	// 5
+			{ frontBR, uvBL, rightN },	// 6
+
+			{ backTR, uvTR, rightN },	// 5
+			{ backBR, uvBR, rightN },	// 7
+			{ frontBR, uvBL, rightN },	// 6
+
+			{ backTR, uvTL, backN },	// 8
+			{ backTL, uvTR, backN },	// 9
+			{ backBR, uvBL, backN },	// 10
+
+			{ backTL, uvTR, backN },	// 9
+			{ backBL, uvBR, backN },	// 11
+			{ backBR, uvBL, backN },	// 10
+
+			{ backTL, uvTL, leftN },	// 12
+			{ frontTL, uvTR, leftN },	// 13
+			{ backBL, uvBL, leftN },	// 14
+
+
+			{ frontTL, uvTR, leftN },	// 13
+			{ frontBL, uvBR, leftN },	// 15
+			{ backBL, uvBL, leftN },	// 14
+
+			{ backTL, uvTL, topN },
+			{ backTR, uvTR, topN },
+			{ frontTL, uvBL, topN },
+
+			{ backTR, uvTR, topN },
+			{ frontTR, uvBR, topN },
+			{ frontTL, uvBL, topN },
+		};
+
+		m_num_verts_cube = ARRAYSIZE(new_cube_verts);
+
+		const UINT floor_indicies[] =
+		{
+			0,1,2,
+			1,3,2
+		};
+		floor_indexCount = ARRAYSIZE(floor_indicies);
 
 		D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
-		vertexBufferData.pSysMem = cubeVertices;
+		vertexBufferData.pSysMem = floor_vertices;
 		vertexBufferData.SysMemPitch = 0;
 		vertexBufferData.SysMemSlicePitch = 0;
-		CD3D11_BUFFER_DESC vertexBufferDesc(sizeof(cubeVertices), D3D11_BIND_VERTEX_BUFFER);
-		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &m_vertexBuffer));
-
-		// Load mesh indices. Each trio of indices represents
-		// a triangle to be rendered on the screen.
-		// For example: 0,2,1 means that the vertices with indexes
-		// 0, 2 and 1 from the vertex buffer compose the 
-		// first triangle of this mesh.
-		static const unsigned short cubeIndices[] =
-		{
-			0,1,2, // -x
-			1,3,2,
-
-			4,6,5, // +x
-			5,6,7,
-
-			0,5,1, // -y
-			0,4,5,
-
-			2,7,6, // +y
-			2,3,7,
-
-			0,6,4, // -z
-			0,2,6,
-
-			1,7,3, // +z
-			1,5,7,
-		};
-
-		m_indexCount = ARRAYSIZE(cubeIndices);
+		CD3D11_BUFFER_DESC vertexBufferDesc(sizeof(floor_vertices), D3D11_BIND_VERTEX_BUFFER);
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &floor_vertexBuffer));
 
 		D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
-		indexBufferData.pSysMem = cubeIndices;
+		indexBufferData.pSysMem = floor_indicies;
 		indexBufferData.SysMemPitch = 0;
 		indexBufferData.SysMemSlicePitch = 0;
-		CD3D11_BUFFER_DESC indexBufferDesc(sizeof(cubeIndices), D3D11_BIND_INDEX_BUFFER);
-		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&indexBufferDesc, &indexBufferData, &m_indexBuffer));
+		CD3D11_BUFFER_DESC indexBufferDesc(sizeof(floor_indicies), D3D11_BIND_INDEX_BUFFER);
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&indexBufferDesc, &indexBufferData, &floor_indexBuffer));
+
+		D3D11_SUBRESOURCE_DATA vertexBufferData2 = { 0 };
+		vertexBufferData2.pSysMem = new_cube_verts;
+		vertexBufferData2.SysMemPitch = 0;
+		vertexBufferData2.SysMemSlicePitch = 0;
+		CD3D11_BUFFER_DESC vertexBufferDesc2(sizeof(new_cube_verts), D3D11_BIND_VERTEX_BUFFER);
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&vertexBufferDesc2, &vertexBufferData2, &m_vertexBuffer_new_Cube));
+		//
+		vector<Vertex> mod_vertBuffer;
+		vector<UINT> mod_IndexBuffer;
+		if (Load("Assets/asteroid.obj", mod_vertBuffer, mod_IndexBuffer))
+		{
+			SDF1_indexCount = mod_IndexBuffer.size();
+
+
+			D3D11_SUBRESOURCE_DATA SDF1_indexBufferData = { 0 };
+			SDF1_indexBufferData.pSysMem = mod_IndexBuffer.data();
+			SDF1_indexBufferData.SysMemPitch = 0;
+			SDF1_indexBufferData.SysMemSlicePitch = 0;
+			CD3D11_BUFFER_DESC SDF1_indexBufferDesc(sizeof(unsigned int)*mod_IndexBuffer.size(), D3D11_BIND_INDEX_BUFFER);
+			DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&SDF1_indexBufferDesc, &SDF1_indexBufferData, &SDF1_indexBuffer));
+
+			D3D11_SUBRESOURCE_DATA SDF1_vertexBufferData = { 0 };
+			SDF1_vertexBufferData.pSysMem = mod_vertBuffer.data();
+			SDF1_vertexBufferData.SysMemPitch = 0;
+			SDF1_vertexBufferData.SysMemSlicePitch = 0;
+			CD3D11_BUFFER_DESC SDF1_vertexBufferDesc(sizeof(Vertex)*mod_vertBuffer.size(), D3D11_BIND_VERTEX_BUFFER);
+			DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&SDF1_vertexBufferDesc, &SDF1_vertexBufferData, &SDF1_vertexBuffer));
+		}
 	});
 
+	CD3D11_BUFFER_DESC constantBufferDesc(sizeof(Dlightdata), D3D11_BIND_CONSTANT_BUFFER);
+	DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&constantBufferDesc, nullptr, &floor_constantBufferDlight));
+	CD3D11_BUFFER_DESC constantBufferDesc_Plight(sizeof(Plightdata), D3D11_BIND_CONSTANT_BUFFER);
+	DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&constantBufferDesc_Plight, nullptr, &floor_constantBufferPlight));
+	CD3D11_BUFFER_DESC constantBufferDesc_Slight(sizeof(Slightdata), D3D11_BIND_CONSTANT_BUFFER);
+	DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&constantBufferDesc_Slight, nullptr, &floor_constantBufferSlight));
+
 	// Once the cube is loaded, the object is ready to be rendered.
-	createCubeTask.then([this]()
+	create_FloorTask.then([this]()
 	{
 		m_loadingComplete = true;
 	});
@@ -410,12 +547,4 @@ void Sample3DSceneRenderer::ReleaseDeviceDependentResources(void)
 	m_constantBuffer.Reset();
 	m_vertexBuffer.Reset();
 	m_indexBuffer.Reset();
-	//Floor
-	floor_loadingComplete = false;
-	floor_vertexShader.Reset();
-	floor_inputLayout.Reset();
-	floor_pixelShader.Reset();
-	floor_constantBuffer.Reset();
-	floor_vertexBuffer.Reset();
-	floor_indexBuffer.Reset();
 }

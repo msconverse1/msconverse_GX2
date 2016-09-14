@@ -99,6 +99,7 @@
     <ClInclude Include="Common\StepTimer.h">
       <Filter>Common\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="modelloader.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -110,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DX11UWA_TemporaryKey.pfx" />
+    <None Include="Assets\SDF1.obj" />
+    <None Include="Assets\tomahawk.obj" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">
@@ -118,5 +121,16 @@
     <FxCompile Include="Content\SampleVertexShader.hlsl">
       <Filter>Content\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Content\PUN_PixelShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\PUN_VertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Assets\asteroid.obj">
+      <Filter>Assets</Filter>
+    </Object>
   </ItemGroup>
 </Project>
