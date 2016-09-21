@@ -35,6 +35,9 @@ VERTEX_OUT main( VERTEX_IN input )
 	output.posH = pos;
 	output.uv = input.uv;
 	output.norm = mul(input.norm,(float3x3)model);
+	output.norm = normalize(output.norm);
+
+
 
 	return output;
 }

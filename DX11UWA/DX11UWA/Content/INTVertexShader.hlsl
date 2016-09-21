@@ -3,6 +3,7 @@ struct VERTEX_IN
 	float3 pos : POSITION;
 	float3 uv : UV;
 	float3 norm : NORMAL;
+	float4 tanget : TANGENT;
 };
 
 struct VERTEX_OUT
@@ -11,6 +12,8 @@ struct VERTEX_OUT
 	float3 uv : UV;
 	float3 norm : NORMAL;
 	float3 posW : WORLDPOS;
+	float3 tanget : TANGENT;
+	float3 bitanget : BITANGENT;
 };
 
 
@@ -36,6 +39,7 @@ VERTEX_OUT main(VERTEX_IN input, uint ID : SV_InstanceID)
 	output.posH = pos;
 	output.uv = input.uv;
 	output.norm = mul(input.norm, (float3x3)model[ID]);
-
+	output.tanget = mul(float3(1.0f,1.0f,0.0f), (float3x3)model[ID]);
+	output.bitanget = mul(cross(input.norm.xyz, input.tanget.xyz), (float3x3)model[ID]);
 return output;
 }

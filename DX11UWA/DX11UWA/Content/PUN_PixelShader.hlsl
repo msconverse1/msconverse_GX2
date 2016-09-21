@@ -33,6 +33,7 @@ struct PIXEL_IN
 	float3 posW : WORLDPOS;
 };
 
+
 Texture2D diffuse : register(t0);
 SamplerState filter : register(s0);
 
@@ -56,6 +57,7 @@ float4 main(PIXEL_IN input) : SV_TARGET
 	float3 point_lightdir = normalize(p_pos - input.posW);
 	float3 point_lightratio =dot(point_lightdir, input.norm);
 	float3 point_result = point_lightratio*p_color;
+
 	float4 final_color = float4(final_dir_color, 0.0f) + float4(spot_result, 0.0f)+ float4(point_result, 0.0f);
 	                  // directional                  spot                         point
 	if (texture_color.x != 0 && texture_color.y != 0 && texture_color.z != 0)

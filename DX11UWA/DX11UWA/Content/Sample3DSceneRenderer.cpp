@@ -28,9 +28,30 @@ Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceRes
 // Initializes view parameters when the window size changes.
 void Sample3DSceneRenderer::CreateWindowSizeDependentResources(void)
 {
+	auto window = m_deviceResources->GetD3DDevice();
+	
+
 	Size outputSize = m_deviceResources->GetOutputSize();
-	float aspectRatio = outputSize.Width / outputSize.Height;
-	float fovAngleY = 70.0f * XM_PI / 180.0f;
+	float aspectRatio = outputSize.Width / (outputSize.Height/2);
+	float fovAngleY = 70.0f * XM_PI / 180.0f; 
+
+		Screens[0].Height = outputSize.Height / 2;
+		Screens[0].Width = outputSize.Width ;
+		Screens[0].MinDepth = 0;
+		Screens[0].MaxDepth = 1;
+		Screens[0].TopLeftX = 0;
+		Screens[0].TopLeftY = 0;
+
+		Screens[1].Height = outputSize.Height / 2;
+		Screens[1].Width = outputSize.Width;
+		Screens[1].MinDepth = 0;
+		Screens[1].MaxDepth = 1;
+		Screens[1].TopLeftX = 0;
+		Screens[1].TopLeftY = outputSize.Height / 2;
+
+
+
+
 
 	// This is a simple example of change that can be made when the app is in
 	// portrait or snapped view.
@@ -56,11 +77,14 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources(void)
 
 	// Eye is at (0,0.7,1.5), looking at point (0,-0.1,0) with the up-vector along the y-axis.
 	static const XMVECTORF32 eye = { 0.0f, 2.7f, -10.5f, 0.0f };
+	static const XMVECTORF32 eye2 = { 0.0f, 1.7f, -10.5f, 0.0f };
 	static const XMVECTORF32 at = { 0.0f, -0.1f, 0.0f, 0.0f };
 	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
-	XMStoreFloat4x4(&m_camera, XMMatrixInverse(nullptr, XMMatrixLookAtLH(eye, at, up)));
+	XMStoreFloat4x4(&m_camera[0], XMMatrixInverse(nullptr, XMMatrixLookAtLH(eye, at, up)));
+	XMStoreFloat4x4(&m_camera[1], XMMatrixInverse(nullptr, XMMatrixLookAtLH(eye2, at, up)));
 	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixLookAtLH(eye, at, up)));
+
 }
 
 // Called once per frame, rotates the cube and calculates the model and view matrices.
@@ -93,79 +117,82 @@ void Sample3DSceneRenderer::Rotate(float radians)
 void Sample3DSceneRenderer::UpdateCamera(DX::StepTimer const& timer, float const moveSpd, float const rotSpd)
 {
 	const float delta_time = (float)timer.GetElapsedSeconds();
+	for (unsigned int i = 0; i < 1; i++)
+	{
 
-	if (m_kbuttons['W'])
-	{
-		XMMATRIX translation = XMMatrixTranslation(0.0f, 0.0f, moveSpd * delta_time);
-		XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera);
-		XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
-		XMStoreFloat4x4(&m_camera, result);
-	}
-	if (m_kbuttons['S'])
-	{
-		XMMATRIX translation = XMMatrixTranslation(0.0f, 0.0f, -moveSpd * delta_time);
-		XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera);
-		XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
-		XMStoreFloat4x4(&m_camera, result);
-	}
-	if (m_kbuttons['A'])
-	{
-		XMMATRIX translation = XMMatrixTranslation(-moveSpd * delta_time, 0.0f, 0.0f);
-		XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera);
-		XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
-		XMStoreFloat4x4(&m_camera, result);
-	}
-	if (m_kbuttons['D'])
-	{
-		XMMATRIX translation = XMMatrixTranslation(moveSpd * delta_time, 0.0f, 0.0f);
-		XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera);
-		XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
-		XMStoreFloat4x4(&m_camera, result);
-	}
-	if (m_kbuttons['X'])
-	{
-		XMMATRIX translation = XMMatrixTranslation( 0.0f, -moveSpd * delta_time, 0.0f);
-		XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera);
-		XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
-		XMStoreFloat4x4(&m_camera, result);
-	}
-	if (m_kbuttons[VK_SPACE])
-	{
-		XMMATRIX translation = XMMatrixTranslation( 0.0f, moveSpd * delta_time, 0.0f);
-		XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera);
-		XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
-		XMStoreFloat4x4(&m_camera, result);
-	}
 
-	if (m_currMousePos) 
-	{
-		if (m_currMousePos->Properties->IsRightButtonPressed && m_prevMousePos)
+		if (m_kbuttons['W'])
 		{
-			float dx = m_currMousePos->Position.X - m_prevMousePos->Position.X;
-			float dy = m_currMousePos->Position.Y - m_prevMousePos->Position.Y;
-
-			XMFLOAT4 pos = XMFLOAT4(m_camera._41, m_camera._42, m_camera._43, m_camera._44);
-
-			m_camera._41 = 0;
-			m_camera._42 = 0;
-			m_camera._43 = 0;
-
-			XMMATRIX rotX = XMMatrixRotationX(dy * rotSpd * delta_time);
-			XMMATRIX rotY = XMMatrixRotationY(dx * rotSpd * delta_time);
-
-			XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera);
-			temp_camera = XMMatrixMultiply(rotX, temp_camera);
-			temp_camera = XMMatrixMultiply(temp_camera, rotY);
-
-			XMStoreFloat4x4(&m_camera, temp_camera);
-
-			m_camera._41 = pos.x;
-			m_camera._42 = pos.y;
-			m_camera._43 = pos.z;
+			XMMATRIX translation = XMMatrixTranslation(0.0f, 0.0f, moveSpd * delta_time);
+			XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera[i]);
+			XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
+			XMStoreFloat4x4(&m_camera[i], result);
 		}
-		m_prevMousePos = m_currMousePos;
-	}
+		if (m_kbuttons['S'])
+		{
+			XMMATRIX translation = XMMatrixTranslation(0.0f, 0.0f, -moveSpd * delta_time);
+			XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera[i]);
+			XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
+			XMStoreFloat4x4(&m_camera[i], result);
+		}
+		if (m_kbuttons['A'])
+		{
+			XMMATRIX translation = XMMatrixTranslation(-moveSpd * delta_time, 0.0f, 0.0f);
+			XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera[i]);
+			XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
+			XMStoreFloat4x4(&m_camera[i], result);
+		}
+		if (m_kbuttons['D'])
+		{
+			XMMATRIX translation = XMMatrixTranslation(moveSpd * delta_time, 0.0f, 0.0f);
+			XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera[i]);
+			XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
+			XMStoreFloat4x4(&m_camera[i], result);
+		}
+		if (m_kbuttons['X'])
+		{
+			XMMATRIX translation = XMMatrixTranslation(0.0f, -moveSpd * delta_time, 0.0f);
+			XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera[i]);
+			XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
+			XMStoreFloat4x4(&m_camera[i], result);
+		}
+		if (m_kbuttons[VK_SPACE])
+		{
+			XMMATRIX translation = XMMatrixTranslation(0.0f, moveSpd * delta_time, 0.0f);
+			XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera[i]);
+			XMMATRIX result = XMMatrixMultiply(translation, temp_camera);
+			XMStoreFloat4x4(&m_camera[i], result);
+		}
 
+		if (m_currMousePos)
+		{
+			if (m_currMousePos->Properties->IsRightButtonPressed && m_prevMousePos)
+			{
+				float dx = m_currMousePos->Position.X - m_prevMousePos->Position.X;
+				float dy = m_currMousePos->Position.Y - m_prevMousePos->Position.Y;
+
+				XMFLOAT4 pos = XMFLOAT4(m_camera[i]._41, m_camera[i]._42, m_camera[i]._43, m_camera[i]._44);
+
+				m_camera[i]._41 = 0;
+				m_camera[i]._42 = 0;
+				m_camera[i]._43 = 0;
+
+				XMMATRIX rotX = XMMatrixRotationX(dy * rotSpd * delta_time);
+				XMMATRIX rotY = XMMatrixRotationY(dx * rotSpd * delta_time);
+
+				XMMATRIX temp_camera = XMLoadFloat4x4(&m_camera[i]);
+				temp_camera = XMMatrixMultiply(rotX, temp_camera);
+				temp_camera = XMMatrixMultiply(temp_camera, rotY);
+
+				XMStoreFloat4x4(&m_camera[i], temp_camera);
+
+				m_camera[i]._41 = pos.x;
+				m_camera[i]._42 = pos.y;
+				m_camera[i]._43 = pos.z;
+			}
+			m_prevMousePos = m_currMousePos;
+		}
+	}
 
 }
 
@@ -209,15 +236,234 @@ void Sample3DSceneRenderer::StopTracking(void)
 void Sample3DSceneRenderer::LightRotation(void)
 {
 	//dir light
-	XMStoreFloat4(&Dlightdata.direction, XMVector3Transform(XMLoadFloat4(&(Dlightdata.direction)), XMMatrixTranspose(XMMatrixRotationX(0.07f))));
+	//XMStoreFloat4(&Dlightdata.direction, XMVector3Transform(XMLoadFloat4(&(Dlightdata.direction)), XMMatrixTranspose(XMMatrixRotationX(0.02f))));
 	//spot light
 	/*XMStoreFloat4(&Slightdata.pos, XMVector3Transform(XMLoadFloat4(&(Slightdata.pos)), XMMatrixTranspose(XMMatrixRotationZ(0.07f))));
 	XMStoreFloat4(&Slightdata.ConeDir, XMVector3TransformNormal(XMLoadFloat4(&(Slightdata.ConeDir)), XMMatrixTranspose(XMMatrixRotationZ(0.07f))));*/
 	//point
-	XMStoreFloat4(&Plightdata.pos, XMVector3Transform(XMLoadFloat4(&(Plightdata.pos)), XMMatrixTranspose(XMMatrixRotationX(0.07f))));
+	XMStoreFloat4(&Plightdata.pos, XMVector3Transform(XMLoadFloat4(&(Plightdata.pos)), XMMatrixTranspose(XMMatrixRotationX(0.02f))));
 }
+
 // Renders one frame using the vertex and pixel shaders.
 void Sample3DSceneRenderer::Render(void)
+{
+	auto context = m_deviceResources->GetD3DDeviceContext();
+Rendermult(0);
+	//context->ClearState();
+
+Rendermult(1);
+
+#pragma region moved to 2
+//	// Loading is asynchronous. Only draw geometry after it's loaded.
+//	if (!m_loadingComplete)
+//	{
+//		return;
+//	}
+//
+//	auto context = m_deviceResources->GetD3DDeviceContext();
+//
+//	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_camera))));
+//
+//	// Prepare the constant buffer to send it to the graphics device.
+//	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
+//	context->UpdateSubresource1(floor_constantBufferSlight.Get(), 0, NULL, &Slightdata, 0, 0, 0);
+//	context->UpdateSubresource1(floor_constantBufferPlight.Get(), 0, NULL, &Plightdata, 0, 0, 0);
+//
+//	////////////////////////////////////////////////////////////
+//	//skybox 
+//	////////////////////////////////////////////////////////////
+//#pragma region Skybox
+//	static float rot = 0.0f;
+//	rot += 0.01f;
+//	skybox_constantBufferData = m_constantBufferData;
+//	XMMATRIX skybox_position = XMMatrixTranslation(m_camera._41,m_camera._42,m_camera._43);
+//
+//	XMMATRIX rotationY = XMMatrixRotationY(XMConvertToRadians(rot));
+//	skybox_position = XMMatrixMultiply(rotationY, skybox_position);
+//	XMStoreFloat4x4(&skybox_constantBufferData.model, XMMatrixTranspose(skybox_position));
+//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &skybox_constantBufferData, 0, 0, 0);
+//	UINT stride = sizeof(VertexPositionUVNormal);
+//	UINT offset = 0;
+//	context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
+//	// Each index is one 16-bit unsigned integer (short).
+//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//	context->IASetInputLayout(m_inputLayout_PUN.Get());
+//	// Attach our vertex shader.
+//	context->VSSetShader(skybox_vertexShader.Get(), nullptr, 0);
+//	// Send the constant buffer to the graphics device.
+//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+//	// Attach our pixel shader.
+//	context->PSSetShader(skybox_pixelShader.Get(), nullptr, 0);
+//	// create black sample state on other objects till they have there own resources
+//	context->PSSetShaderResources(0, 1, skybox_rsv.GetAddressOf());
+//	context->RSSetState(raster_state_ccw.Get());
+//	context->Draw(m_num_verts_cube, 0);
+//	context->RSSetState(raster_state_cw.Get());
+//	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+//#pragma endregion
+//
+//	ID3D11ShaderResourceView* nullsrv = nullptr;
+//	context->PSSetShaderResources(0, 1, &nullsrv);
+//	/////////////////////////////////////////////////////////////////
+//	//cube///////////////////////////////
+//	////////////////////////////////////////////////////////////////
+//#pragma region Cube
+//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
+//	// Each vertex is one instance of the VertexPositionColor struct.
+//	 stride = sizeof(VertexPositionUVNormal);
+//	 offset = 0;
+//	context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
+//	// Each index is one 16-bit unsigned integer (short).
+//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//	context->IASetInputLayout(m_inputLayout_PUN.Get());
+//	// Attach our vertex shader.
+//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
+//	// Send the constant buffer to the graphics device.
+//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+//	// Attach our pixel shader.
+//	context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
+//
+//
+//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+//	// Draw the objects.
+//	context->Draw(m_num_verts_cube, 0);
+//#pragma endregion
+//	///////////////////////////////////////////////////////////////////////
+//	// Creation for the floor
+//	////////////////////////
+//	////////Lights Setup////
+//	////////////////////////
+//
+//	/////////////////////////////////////////
+//	//moves the cube///////
+//	////////////////////////////////////////
+//#pragma region floor
+//	XMStoreFloat4x4(&m_constantBufferData.model,XMMatrixTranspose(XMMatrixTranslation(0.0f, -3.0f, 0.0f)));
+//
+//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
+//	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
+//	context->UpdateSubresource1(floor_constantBufferSlight.Get(), 0, NULL, &Slightdata, 0, 0, 0);
+//	context->UpdateSubresource1(floor_constantBufferPlight.Get(), 0, NULL, &Plightdata, 0, 0, 0);
+//	stride = sizeof(VertexPositionUVNormal);
+//	offset = 0;
+//	context->IASetVertexBuffers(0, 1, floor_vertexBuffer.GetAddressOf(), &stride, &offset);
+//	context->IASetIndexBuffer(floor_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//	context->IASetInputLayout(m_inputLayout_PUN.Get());
+//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
+//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+//	context->DrawIndexed(6, 0, 0);
+//#pragma endregion
+//	//////////////////////////
+//	///Asteroid/////
+//	/////////////////////////
+//#pragma region Asteroid
+//	modelin = 10;
+//	Asteroid_arraymodel.view = m_constantBufferData.view;
+//	Asteroid_arraymodel.projection = m_constantBufferData.projection;
+//	stride = sizeof(VertexPositionUVNormalMap);
+//	// draw and update pos of asteroid
+//	for (uint32 i = 0; i < modelin; i++)
+//	{
+//	XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixIdentity());
+//	if(i == 0)
+//		XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i+2.0f, 0.0f, 0.0f)));
+//	else
+//	XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i*2.0f+2.0f, 0.0f, 0.0f)));
+//
+//	}
+//	context->UpdateSubresource1(Asteroid_constantBuffer.Get(), 0, NULL, &Asteroid_arraymodel, 0, 0, 0);
+//	context->IASetVertexBuffers(0, 1, Asteroid_vertexBuffer.GetAddressOf(), &stride, &offset);
+//	context->IASetIndexBuffer(Asteroid_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//	context->IASetInputLayout(NM_inputLayout.Get());
+//	context->VSSetShader(NM_vertexShader.Get(), nullptr, 0);
+//	context->VSSetConstantBuffers1(0, 1, Asteroid_constantBuffer.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetShader(NM_pixelShader.Get(), nullptr, 0);
+//	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
+//	context->PSSetShaderResources(1, 1, SDF1_rock_rsv.GetAddressOf());
+//
+//	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
+//	context->DrawIndexedInstanced(Asteroid_indexCount,10, 0, 0, 0);
+//#pragma endregion
+//	////////////////////////////////////////////
+//	///SDF1///
+//	////////////////////////////////////////////
+//#pragma region SDF1
+//	 stride = sizeof(VertexPositionUVNormal);
+//
+//	SDF1_constantBufferData.view = m_constantBufferData.view;
+//	SDF1_constantBufferData.projection = m_constantBufferData.projection;
+//	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixIdentity());
+//	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(-20.0f, 0.0f, 0.0f)));
+//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &SDF1_constantBufferData, 0, 0, 0);
+//	context->IASetVertexBuffers(0, 1, SDF1_vertexBuffer.GetAddressOf(), &stride, &offset);
+//	context->IASetIndexBuffer(SDF1_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//	context->IASetInputLayout(m_inputLayout_PUN.Get());
+//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
+//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+//	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
+//	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
+//	context->DrawIndexed(SDF1_indexCount, 0, 0);
+//#pragma endregion
+//	//////////////////////////////////////////////////////////
+//	///Cruiser/////////
+//	///////////////////////////////////////////////////////////
+//#pragma region GCruiser
+//	 stride = sizeof(VertexPositionUVNormal);
+//
+//	GCruiser_constantBufferData.view = m_constantBufferData.view;
+//	GCruiser_constantBufferData.projection = m_constantBufferData.projection;
+//	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixIdentity());
+//	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(5.0f, -5.0f, 0.0f)));
+//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GCruiser_constantBufferData, 0, 0, 0);
+//	context->IASetVertexBuffers(0, 1, GCruiser_vertexBuffer.GetAddressOf(), &stride, &offset);
+//	context->IASetIndexBuffer(GCruiser_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//	context->IASetInputLayout(m_inputLayout_PUN.Get());
+//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
+//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+//	context->PSSetShaderResources(0, 1, GCruiser_rock_rsv.GetAddressOf());
+//	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
+//	//context->DrawIndexedInstanced(10, SDF1_indexCount, 0, 0, 0);
+//	context->DrawIndexed(GCruiser_indexCount, 0, 0);
+//	// create black sample state on other objects till they have there own resources
+//#pragma endregion
+//	////////////////////////////////////////////////////////////
+//	///GeoShader ////////////////////////
+//#pragma region GeoShader
+//	 stride = sizeof(VertexPositionUVNormal);
+//
+//	GS_constantBufferData.model = m_constantBufferData.model;
+//	GS_constantBufferData.view = m_constantBufferData.view;
+//	GS_constantBufferData.projection = m_constantBufferData.projection;
+//
+//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GS_constantBufferData, 0, 0, 0);
+//	context->IASetVertexBuffers(0, 1, GS_vertexBuffer.GetAddressOf(), &stride, &offset);
+//	context->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+//	context->IASetInputLayout(m_inputLayout_PUN.Get());
+//	context->GSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+//	context->GSSetShader(GS_GeoShader.Get(), nullptr, 0);
+//	context->VSSetShader(GS_vertShader.Get(), nullptr, 0);
+//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+//	context->Draw(m_que_verts, 0);
+//#pragma endregion
+//
+//	ID3D11GeometryShader* geonullsrv = nullptr;
+//	context->GSSetShader(geonullsrv, nullptr, NULL);
+//	context->PSSetShaderResources(0, 1, &nullsrv);
+#pragma endregion
+}
+void Sample3DSceneRenderer::Rendermult(int passedscreen)
 {
 	// Loading is asynchronous. Only draw geometry after it's loaded.
 	if (!m_loadingComplete)
@@ -225,9 +471,11 @@ void Sample3DSceneRenderer::Render(void)
 		return;
 	}
 
-	auto context = m_deviceResources->GetD3DDeviceContext();
 
-	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_camera))));
+	auto context = m_deviceResources->GetD3DDeviceContext();
+	context->RSSetViewports(1, &Screens[passedscreen]);
+	
+	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_camera[passedscreen]))));
 
 	// Prepare the constant buffer to send it to the graphics device.
 	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
@@ -241,7 +489,7 @@ void Sample3DSceneRenderer::Render(void)
 	static float rot = 0.0f;
 	rot += 0.01f;
 	skybox_constantBufferData = m_constantBufferData;
-	XMMATRIX skybox_position = XMMatrixTranslation(m_camera._41,m_camera._42,m_camera._43);
+	XMMATRIX skybox_position = XMMatrixTranslation(m_camera[passedscreen]._41, m_camera[passedscreen]._42, m_camera[passedscreen]._43);
 
 	XMMATRIX rotationY = XMMatrixRotationY(XMConvertToRadians(rot));
 	skybox_position = XMMatrixMultiply(rotationY, skybox_position);
@@ -275,8 +523,8 @@ void Sample3DSceneRenderer::Render(void)
 #pragma region Cube
 	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
 	// Each vertex is one instance of the VertexPositionColor struct.
-	 stride = sizeof(VertexPositionUVNormal);
-	 offset = 0;
+	stride = sizeof(VertexPositionUVNormal);
+	offset = 0;
 	context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
 	// Each index is one 16-bit unsigned integer (short).
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -305,9 +553,11 @@ void Sample3DSceneRenderer::Render(void)
 	//moves the cube///////
 	////////////////////////////////////////
 #pragma region floor
-	XMStoreFloat4x4(&m_constantBufferData.model,XMMatrixTranspose(XMMatrixTranslation(0.0f, -3.0f, 0.0f)));
+	floor_constantBufferData.view = m_constantBufferData.view;
+	floor_constantBufferData.projection = m_constantBufferData.projection;
+	XMStoreFloat4x4(&floor_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(0.0f, -3.0f, 0.0f)));
 
-	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
+	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &floor_constantBufferData, 0, 0, 0);
 	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
 	context->UpdateSubresource1(floor_constantBufferSlight.Get(), 0, NULL, &Slightdata, 0, 0, 0);
 	context->UpdateSubresource1(floor_constantBufferPlight.Get(), 0, NULL, &Plightdata, 0, 0, 0);
@@ -332,32 +582,37 @@ void Sample3DSceneRenderer::Render(void)
 	modelin = 10;
 	Asteroid_arraymodel.view = m_constantBufferData.view;
 	Asteroid_arraymodel.projection = m_constantBufferData.projection;
+	stride = sizeof(VertexPositionUVNormalMap);
 	// draw and update pos of asteroid
 	for (uint32 i = 0; i < modelin; i++)
 	{
-	XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixIdentity());
-	if(i == 0)
-		XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i+2.0f, 0.0f, 0.0f)));
-	else
-	XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i*2.0f+2.0f, 0.0f, 0.0f)));
+		XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixIdentity());
+		if (i == 0)
+			XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i + 2.0f, 0.0f, 0.0f)));
+		else
+			XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i*2.0f + 2.0f, 0.0f, 0.0f)));
 
 	}
 	context->UpdateSubresource1(Asteroid_constantBuffer.Get(), 0, NULL, &Asteroid_arraymodel, 0, 0, 0);
 	context->IASetVertexBuffers(0, 1, Asteroid_vertexBuffer.GetAddressOf(), &stride, &offset);
 	context->IASetIndexBuffer(Asteroid_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(m_inputLayout_PUN.Get());
-	context->VSSetShader(Asteroid_vertexShader.Get(), nullptr, 0);
+	context->IASetInputLayout(NM_inputLayout.Get());
+	context->VSSetShader(NM_vertexShader.Get(), nullptr, 0);
 	context->VSSetConstantBuffers1(0, 1, Asteroid_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-	context->PSSetShaderResources(0, 1, SDF1_rock_rsv.GetAddressOf());
+	context->PSSetShader(NM_pixelShader.Get(), nullptr, 0);
+	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
+	context->PSSetShaderResources(1, 1, SDF1_rock_rsv.GetAddressOf());
+
 	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-	context->DrawIndexedInstanced(Asteroid_indexCount,10, 0, 0, 0);
+	context->DrawIndexedInstanced(Asteroid_indexCount, 10, 0, 0, 0);
 #pragma endregion
 	////////////////////////////////////////////
 	///SDF1///
 	////////////////////////////////////////////
 #pragma region SDF1
+	stride = sizeof(VertexPositionUVNormal);
+
 	SDF1_constantBufferData.view = m_constantBufferData.view;
 	SDF1_constantBufferData.projection = m_constantBufferData.projection;
 	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixIdentity());
@@ -370,19 +625,51 @@ void Sample3DSceneRenderer::Render(void)
 	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
 	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
 	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-	context->PSSetShaderResources(0, 1, SDF1_rock_rsv.GetAddressOf());
+	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
 	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-	//context->DrawIndexedInstanced(10, SDF1_indexCount, 0, 0, 0);
 	context->DrawIndexed(SDF1_indexCount, 0, 0);
+#pragma endregion
+	////////////////////////
+	///////////
+	///////////////////////
+#pragma region Tomahawk
+	stride = sizeof(VertexPositionUVNormalMap);
+	for (uint32 i = 0; i < 1; i++)
+	{
+		XMStoreFloat4x4(&Tomahawk_arraymodel.model[i], XMMatrixIdentity());
+	    XMStoreFloat4x4(&Tomahawk_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i + 2.0f, 0.0f, 0.0f)));
+		
+	}
+	Tomahawk_constantBufferData.view = m_constantBufferData.view;
+	Tomahawk_constantBufferData.projection = m_constantBufferData.projection;
+	XMStoreFloat4x4(&Tomahawk_constantBufferData.model, XMMatrixIdentity());
+	XMStoreFloat4x4(&Tomahawk_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(0.0f, 0.0f, 0.0f)));
+	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &Tomahawk_constantBufferData, 0, 0, 0);
+	context->IASetVertexBuffers(0, 1, Tomahawk_vertexBuffer.GetAddressOf(), &stride, &offset);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetInputLayout(Tomahawk_inputLayout.Get());
+	context->VSSetShader(Tomahawk_vertexShader.Get(), nullptr, 0);
+	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
+	for (UINT i = 0; i < Num0fMeshes; i++)
+	{
+	context->IASetIndexBuffer(Tomahawk_indexBuffer[i].Get(), DXGI_FORMAT_R32_UINT, 0);
+	context->PSSetShaderResources(0, 1, Tomahawk_rsv[0].GetAddressOf());
+	context->DrawIndexedInstanced(Tomahawk_indexCount,1, 0, 0,0);
+
+	}
 #pragma endregion
 	//////////////////////////////////////////////////////////
 	///Cruiser/////////
 	///////////////////////////////////////////////////////////
 #pragma region GCruiser
+	stride = sizeof(VertexPositionUVNormal);
+
 	GCruiser_constantBufferData.view = m_constantBufferData.view;
 	GCruiser_constantBufferData.projection = m_constantBufferData.projection;
 	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixIdentity());
-	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(5.0f, 1.0f, 0.0f)));
+	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(5.0f, -5.0f, 0.0f)));
 	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GCruiser_constantBufferData, 0, 0, 0);
 	context->IASetVertexBuffers(0, 1, GCruiser_vertexBuffer.GetAddressOf(), &stride, &offset);
 	context->IASetIndexBuffer(GCruiser_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
@@ -393,20 +680,22 @@ void Sample3DSceneRenderer::Render(void)
 	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
 	context->PSSetShaderResources(0, 1, GCruiser_rock_rsv.GetAddressOf());
 	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-	//context->DrawIndexedInstanced(10, SDF1_indexCount, 0, 0, 0);
+	
 	context->DrawIndexed(GCruiser_indexCount, 0, 0);
-	// create black sample state on other objects till they have there own resources
+	
 #pragma endregion
 	////////////////////////////////////////////////////////////
 	///GeoShader ////////////////////////
 #pragma region GeoShader
-	GS_constantBufferData.model = m_constantBufferData.model;
+	stride = sizeof(VertexPositionUVNormal);
+
+	//GS_constantBufferData.model = m_constantBufferData.model;
 	GS_constantBufferData.view = m_constantBufferData.view;
 	GS_constantBufferData.projection = m_constantBufferData.projection;
-
+	XMStoreFloat4x4(&GS_constantBufferData.model, XMMatrixIdentity());
 	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GS_constantBufferData, 0, 0, 0);
 	context->IASetVertexBuffers(0, 1, GS_vertexBuffer.GetAddressOf(), &stride, &offset);
-	context->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 	context->IASetInputLayout(m_inputLayout_PUN.Get());
 	context->GSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
 	context->GSSetShader(GS_GeoShader.Get(), nullptr, 0);
@@ -474,6 +763,50 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreatePixelShader(&fileData[0], fileData.size(), nullptr, &m_pixelShader_PUN));
 
 	});
+
+	auto loadNMVSTask = DX::ReadDataAsync(L"NormalMapping.cso");
+	auto loadNMPSTask = DX::ReadDataAsync(L"NormMapPixelShader.cso");
+	auto createNMVSTaskPUN = loadVSTaskINT.then([this](const std::vector<byte>& fileData)
+	{
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateVertexShader(&fileData[0], fileData.size(), nullptr, &NM_vertexShader));
+
+		static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
+		{
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "UV", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TANGENT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+		};
+
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateInputLayout(vertexDesc, ARRAYSIZE(vertexDesc), &fileData[0], fileData.size(), &NM_inputLayout));
+
+	});
+	auto createNM2VSTaskPUN = loadNMVSTask.then([this](const std::vector<byte>& fileData)
+	{
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateVertexShader(&fileData[0], fileData.size(), nullptr, &Tomahawk_vertexShader));
+
+		static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
+		{
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "UV", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TANGENT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+		};
+
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateInputLayout(vertexDesc, ARRAYSIZE(vertexDesc), &fileData[0], fileData.size(), &Tomahawk_inputLayout));
+
+	});
+	auto createNMPSTaskPUN = loadNMPSTask.then([this](const std::vector<byte>& fileData)
+	{
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreatePixelShader(&fileData[0], fileData.size(), nullptr, &NM_pixelShader));
+	});
+	auto createNM2PSTaskPUN = loadNMPSTask.then([this](const std::vector<byte>& fileData)
+	{
+		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreatePixelShader(&fileData[0], fileData.size(), nullptr, &Tomahawk_pixelShader));
+	});
+
 	/////////////////////////////////////////////
 	////Floor Loader////
 	/////////////////////////////////////////////
@@ -602,9 +935,9 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 	////Asteroid Loader////
 	/////////////////////////////////////////////
 #pragma region Create Asteroid
-	auto create_AsteroidTask = (createPSTaskPUN && createVSTaskPUN).then([this]()
+	auto create_AsteroidTask = (createNMVSTaskPUN && createPSTaskPUN).then([this]()
 	{
-		vector<Vertex> mod_vertBuffer;
+		vector<VertexPositionUVNormalMap> mod_vertBuffer;
 		vector<UINT> mod_IndexBuffer;
 		/////////////////////////////////////////////
 		////Asteroid Loader////
@@ -625,13 +958,14 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 			Asteroid_vertexBufferData.pSysMem = mod_vertBuffer.data();
 			Asteroid_vertexBufferData.SysMemPitch = 0;
 			Asteroid_vertexBufferData.SysMemSlicePitch = 0;
-			CD3D11_BUFFER_DESC Asteroid_vertexBufferDesc(sizeof(Vertex)*mod_vertBuffer.size(), D3D11_BIND_VERTEX_BUFFER);
+			CD3D11_BUFFER_DESC Asteroid_vertexBufferDesc(sizeof(VertexPositionUVNormalMap)*mod_vertBuffer.size(), D3D11_BIND_VERTEX_BUFFER);
 			DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&Asteroid_vertexBufferDesc, &Asteroid_vertexBufferData, &Asteroid_vertexBuffer));
 
 			CD3D11_BUFFER_DESC constantBufferDesc(sizeof(Asteroid_arraymodel), D3D11_BIND_CONSTANT_BUFFER);
 			DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&constantBufferDesc, nullptr, &Asteroid_constantBuffer));
 
-			DX::ThrowIfFailed(CreateDDSTextureFromFile(m_deviceResources->GetD3DDevice(), L"Assets/rock.dds", nullptr, SDF1_rock_rsv.GetAddressOf()));
+			DX::ThrowIfFailed(CreateDDSTextureFromFile(m_deviceResources->GetD3DDevice(), L"Assets/rock_NRM.dds", nullptr, SDF1_rock_rsv.GetAddressOf()));
+			DX::ThrowIfFailed(CreateDDSTextureFromFile(m_deviceResources->GetD3DDevice(), L"Assets/rock_COLOR.dds", nullptr, asteriod_rock_rsv.GetAddressOf()));
 		}
 		mod_IndexBuffer.clear();
 		mod_vertBuffer.clear();
@@ -643,7 +977,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 #pragma region Create SDF1
 	auto create_SDF1Task = (createPSTaskPUN && createVSTaskPUN).then([this]()
 	{
-		vector<Vertex> mod_vertBuffer;
+		vector<VertexPositionUVNormal> mod_vertBuffer;
 		vector<UINT> mod_IndexBuffer;
 		if (Load("Assets/SDF1.obj", mod_vertBuffer, mod_IndexBuffer))
 		{
@@ -664,7 +998,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 			CD3D11_BUFFER_DESC SDF1_vertexBufferDesc(sizeof(Vertex)*mod_vertBuffer.size(), D3D11_BIND_VERTEX_BUFFER);
 			DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&SDF1_vertexBufferDesc, &SDF1_vertexBufferData, &SDF1_vertexBuffer));
 
-			DX::ThrowIfFailed(CreateDDSTextureFromFile(m_deviceResources->GetD3DDevice(), L"Assets/rock.dds", nullptr, SDF1_rock_rsv.GetAddressOf()));
+			
 		}
 		mod_IndexBuffer.clear();
 		mod_vertBuffer.clear();
@@ -676,7 +1010,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 #pragma region Create GallacticCruiser
 	auto create_GallacticCruiserTask = (createPSTaskPUN && createVSTaskPUN).then([this]()
 	{
-		vector<Vertex> mod_vertBuffer;
+		vector<VertexPositionUVNormal> mod_vertBuffer;
 		vector<UINT> mod_IndexBuffer;
 		if (Load("Assets/GallacticCruiser.obj", mod_vertBuffer, mod_IndexBuffer))
 		{
@@ -703,6 +1037,49 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 		mod_vertBuffer.clear();
 	});
 #pragma endregion
+	////////////
+	////tomahawk/////
+	////////
+#pragma region Create mech
+
+		vector<VertexPositionUVNormalMap> mod_vertBuffer;
+		vector<vector<UINT>> mod_IndexBuffer;
+		UINT t_count=1;
+		if (LoadMulti("Assets/tomahawk2.obj",mod_vertBuffer, mod_IndexBuffer, Num0fMeshes))
+		{
+			for (UINT i = 0; i < mod_IndexBuffer.size(); i++)
+			{
+				t_count += mod_IndexBuffer[i].size();
+			}
+			Tomahawk_indexCount = t_count;
+			Num0fMeshes = mod_IndexBuffer.size();
+			Tomahawk_indexBuffer.resize(Num0fMeshes);
+			Tomahawk_rsv.resize(Num0fMeshes);
+
+			for (UINT i = 0; i < Num0fMeshes; i++)
+			{
+
+			D3D11_SUBRESOURCE_DATA Tomahawk_indexBufferData = { 0 };
+			Tomahawk_indexBufferData.pSysMem = mod_IndexBuffer[i].data();
+			Tomahawk_indexBufferData.SysMemPitch = 0;
+			Tomahawk_indexBufferData.SysMemSlicePitch = 0;
+			CD3D11_BUFFER_DESC Tomahawk_indexBufferDesc(sizeof(unsigned int)*mod_IndexBuffer[i].size(), D3D11_BIND_INDEX_BUFFER);
+			DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&Tomahawk_indexBufferDesc, &Tomahawk_indexBufferData, &Tomahawk_indexBuffer[i]));
+
+			}
+			D3D11_SUBRESOURCE_DATA Tomahawk_vertexBufferData = { 0 };
+			Tomahawk_vertexBufferData.pSysMem = mod_vertBuffer.data();
+			Tomahawk_vertexBufferData.SysMemPitch = 0;
+			Tomahawk_vertexBufferData.SysMemSlicePitch = 0;
+			CD3D11_BUFFER_DESC Tomahawk_vertexBufferDesc(sizeof(Vertex)*mod_vertBuffer.size(), D3D11_BIND_VERTEX_BUFFER);
+			DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&Tomahawk_vertexBufferDesc, &Tomahawk_vertexBufferData, &Tomahawk_vertexBuffer));
+
+
+			DX::ThrowIfFailed(CreateDDSTextureFromFile(m_deviceResources->GetD3DDevice(), L"Assets/tomahawk_base.dds", nullptr, Tomahawk_rsv[0].GetAddressOf()));
+		}
+		mod_IndexBuffer.clear();
+		mod_vertBuffer.clear();
+	
 	/////////////////////
 	//teture loader////
 	/////////////////////
@@ -774,11 +1151,11 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
 		CD3D11_BUFFER_DESC constantBufferDesc_Slight(sizeof(Slightdata), D3D11_BIND_CONSTANT_BUFFER);
 		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBuffer(&constantBufferDesc_Slight, nullptr, &floor_constantBufferSlight));
 
-		Dlightdata.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+		Dlightdata.color = XMFLOAT4(0.5f, 0.5f, 0.5f, 0.5f);
 		Dlightdata.direction = XMFLOAT4(0.0f, -1.0f, 0.0f, 0.0f);
 		//point light creation light on rightside of cube
 		Plightdata.color = XMFLOAT4(0.0f, 0.0f, 1.0f, 0.0f);
-		Plightdata.pos = XMFLOAT4(0.0, 1.0, -1.0f, 0.0f);
+		Plightdata.pos = XMFLOAT4(0.0, 10.0, -1.0f, 0.0f);
 		Plightdata.rad = XMFLOAT4(2.0f, 0.0f, 0.0f, 0.0f);
 		//Spot light creation
 		Slightdata.color = XMFLOAT4(0.0f, 1.0f, 0.0f, 0.0f);

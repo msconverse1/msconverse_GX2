@@ -31,6 +31,14 @@ namespace DX11UWA
 		DirectX::XMFLOAT3 uv;
 		DirectX::XMFLOAT3 normal;
 	};
+	// Normal Mapping
+	struct VertexPositionUVNormalMap
+	{
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMFLOAT3 uv;
+		DirectX::XMFLOAT3 normal;
+		DirectX::XMFLOAT4 tangent;
+	};
 
 	struct Dirlight
 	{
@@ -53,5 +61,15 @@ namespace DX11UWA
 		XMFLOAT4 innerCon;
 		XMFLOAT4 ConeDir;
 		XMFLOAT4 color;
+	};
+
+	struct NF3D_LIGHT_OMNIDIRECTIONAL
+	{
+		XMFLOAT4 Diffuse;
+		XMFLOAT4 Ambient;
+		XMFLOAT3 Position;
+		XMFLOAT3 Attitude;
+		float Range;
+		int BindSlot;
 	};
 }
