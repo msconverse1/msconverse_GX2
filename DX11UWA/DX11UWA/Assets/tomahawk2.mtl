@@ -1,0 +1,1166 @@
+#
+#
+#
+
+newmtl tomahawk:chest Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:chest1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:hip Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lCollar Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lCollar1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lFoot Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lForeArm Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lForeArm1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lForeArm2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lForeArm3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lForeArm4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lForeArm5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lForeArm6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lFrontToe Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand10 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand11 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand12 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand13 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand14 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand15 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand16 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand17 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand18 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand19 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand20 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand21 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand22 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand23 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand24 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand25 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand26 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand27 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand28 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand29 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand30 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand31 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand32 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand33 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand34 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand7 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand8 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lHand9 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lRearToe Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lRearToe1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lShin Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lShldr Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lShldr1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lShldr2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lShldr3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lThigh Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch10 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch11 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch12 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch7 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch8 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lTopHatch9 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch10 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch11 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch12 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch13 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch7 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch8 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:lfHatch9 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rCollar Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rCollar1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rFoot Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rFoot1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rForeArm Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rForeArm1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rForeArm2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rForeArm3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rForeArm4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rForeArm5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rForeArm6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rFrontToe Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand10 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand11 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand12 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand13 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand14 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand15 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand16 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand17 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand18 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand19 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand20 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand21 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand22 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand23 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand24 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand25 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand26 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand27 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand28 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand29 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand30 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand31 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand32 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand33 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand34 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand7 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand8 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rHand9 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rRearToe Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rRearToe1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rShin Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rShldr Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rShldr1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rShldr2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rShldr3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rThigh Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch10 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch11 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch12 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch7 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch8 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rTopHatch9 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch1 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch10 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch11 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch12 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch13 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch2 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch3 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch4 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch5 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch6 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch7 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch8 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+
+newmtl tomahawk:rfHatch9 Mesh_tomahawk:initialShadingGroup
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ns 0.000000
+

@@ -47,6 +47,7 @@ void main(point GS_Input input[1], inout TriangleStream<GSOutput> output)
 		element[2].uv = float3(0,1,0);
 		element[3].uv = float3(1,1,0);
 		//back face
+
 		element[4].pos.x += 1.0f;
 		element[4].pos.y += 1.0f;
 		element[5].pos.x -= 1.0f;

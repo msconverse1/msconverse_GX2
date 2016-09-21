@@ -4,8 +4,8 @@
 #include "ShaderStructures.h"
 #include "..\Common\StepTimer.h"
 #include "Common\DDSTextureLoader.h"
-
-
+#include <vector>
+using namespace std;
 namespace DX11UWA
 {
 	// This sample renderer instantiates a basic rendering pipeline.
@@ -18,6 +18,8 @@ namespace DX11UWA
 		void ReleaseDeviceDependentResources(void);
 		void Update(DX::StepTimer const& timer);
 		void Render(void);
+		void Rendermult(int passedscreen);
+
 		void StartTracking(void);
 		void TrackingUpdate(float positionX);
 		void StopTracking(void);
@@ -44,11 +46,14 @@ namespace DX11UWA
 		Microsoft::WRL::ComPtr<ID3D11VertexShader>	m_vertexShader;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader>	m_pixelShader;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		m_constantBuffer;
+		Microsoft::WRL::ComPtr<ID3D11VertexShader>	NM_vertexShader;
+		Microsoft::WRL::ComPtr<ID3D11PixelShader>	NM_pixelShader;
+		Microsoft::WRL::ComPtr<ID3D11InputLayout>	NM_inputLayout;
 
 		// System resources for cube geometry.
 		ModelViewProjectionConstantBuffer	m_constantBufferData;
 		uint32	m_indexCount;
-
+		
 		// Direct3D resources for floor geometry.
 		Microsoft::WRL::ComPtr<ID3D11InputLayout>	m_inputLayout_PUN;
 		Microsoft::WRL::ComPtr<ID3D11VertexShader>	m_vertexShader_PUN;
@@ -77,7 +82,7 @@ namespace DX11UWA
 		Microsoft::WRL::ComPtr<ID3D11PixelShader>	SDF1_pixelShader;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		SDF1_constantBuffer;
 		// System resources for cube geometry.
-		ModelViewProjectionConstantBuffer	SDF1_constantBufferData;
+		ModelViewProjectionConstantBuffer	        SDF1_constantBufferData;
 		uint32	SDF1_indexCount;
 		/////
 		//Asteroid 
@@ -87,16 +92,34 @@ namespace DX11UWA
 		Microsoft::WRL::ComPtr<ID3D11VertexShader>	Asteroid_vertexShader;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader>	Asteroid_pixelShader;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		Asteroid_constantBuffer;
+
+
+
 		// System resources for cube geometry.		
 		INSTANCED_MATRIX                            Asteroid_arraymodel;
+		INSTANCED_MATRIX                            Tomahawk_arraymodel;
+
 		ModelViewProjectionConstantBuffer	        Asteroid_constantBufferData;
 		uint32	                                    Asteroid_indexCount;
 		uint32                                        modelin;
+
+
+		/////////////////////////////////////////
+		///Tomahawk
+		////////////////////////////////////
+		Microsoft::WRL::ComPtr<ID3D11InputLayout>	Tomahawk_inputLayout;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		Tomahawk_vertexBuffer;
+		vector<Microsoft::WRL::ComPtr<ID3D11Buffer>>		Tomahawk_indexBuffer;
+		Microsoft::WRL::ComPtr<ID3D11VertexShader>	Tomahawk_vertexShader;
+		Microsoft::WRL::ComPtr<ID3D11PixelShader>	Tomahawk_pixelShader;
+		Microsoft::WRL::ComPtr<ID3D11Buffer>		Tomahawk_constantBuffer;
+		// System resources for cube geometry.		
+		ModelViewProjectionConstantBuffer	        Tomahawk_constantBufferData;
+		uint32	                                    Tomahawk_indexCount;
 		////////
 		//////Gallactic Cruiser
 		Microsoft::WRL::ComPtr<ID3D11InputLayout>	GCruiser_inputLayout;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		GCruiser_vertexBuffer;
-		//Microsoft::WRL::ComPtr<ID3D11Buffer*>		GCruiser_vertexBuffer2;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		GCruiser_indexBuffer;
 		Microsoft::WRL::ComPtr<ID3D11VertexShader>	GCruiser_vertexShader;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader>	GCruiser_pixelShader;
@@ -105,37 +128,41 @@ namespace DX11UWA
 		INSTANCED_MATRIX                            GCruiser_arraymodel;
 		ModelViewProjectionConstantBuffer	        GCruiser_constantBufferData;
 		uint32	                                    GCruiser_indexCount;
-		//vector<ID3D11Buffer*>                       Gcruiser_indexBuffer2;
 		///////////////////////////
 		//texture creation
 		///////////////////////////
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GCruiser_rock_rsv;
+		vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> Tomahawk_rsv;
+		unsigned int Num0fMeshes;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SDF1_rock_rsv;
-		Microsoft::WRL::ComPtr<ID3D11SamplerState>       sampler_state;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> asteriod_rock_rsv;
 
+		Microsoft::WRL::ComPtr<ID3D11SamplerState>       sampler_state;
 		/////////////////////////////////////////////
 		//creating the skybox
 		/////////////////////////////////////////////
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> skybox_rsv;
 		Microsoft::WRL::ComPtr<ID3D11VertexShader>	     skybox_vertexShader;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader>	     skybox_pixelShader;
-		Microsoft::WRL::ComPtr<ID3D11RasterizerState> raster_state_cw;
-		Microsoft::WRL::ComPtr<ID3D11RasterizerState> raster_state_ccw;
-
-		ModelViewProjectionConstantBuffer	skybox_constantBufferData;
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState>    raster_state_cw;
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState>    raster_state_ccw;
+		ModelViewProjectionConstantBuffer	             skybox_constantBufferData;
 		/////////////
 		Microsoft::WRL::ComPtr<ID3D11InputLayout>	     GS_inputLayout;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		     GS_vertexBuffer;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		     GS_indexBuffer;
-		
 		Microsoft::WRL::ComPtr<ID3D11GeometryShader>	 GS_GeoShader;
 		Microsoft::WRL::ComPtr<ID3D11VertexShader>	     GS_vertShader;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader>	     GS_pixelShader;
 		Microsoft::WRL::ComPtr<ID3D11Buffer>		     GS_constantBuffer;
 		ModelViewProjectionConstantBuffer	             GS_constantBufferData;
 		uint32                                       	 GS_indexCount;
-		Microsoft::WRL::ComPtr<ID3D11RasterizerState> GS_state_cw;
-		UINT										m_que_verts;
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState>    GS_state_cw;
+		UINT										      m_que_verts;
+
+
+		///Splitscreen
+		D3D11_VIEWPORT Screens[2];
 
 		// Variables used with the rendering loop.
 		bool	m_loadingComplete;
@@ -150,7 +177,7 @@ namespace DX11UWA
 		Windows::UI::Input::PointerPoint^ m_prevMousePos;
 
 		// Matrix data member for the camera
-		DirectX::XMFLOAT4X4 m_camera;
+		DirectX::XMFLOAT4X4 m_camera[2];
 	};
 }
 

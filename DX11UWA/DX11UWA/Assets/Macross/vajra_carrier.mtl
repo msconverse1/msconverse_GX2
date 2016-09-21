@@ -1,0 +1,144 @@
+newmtl vajra_carrier:material133
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094A5180_094A5A10.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material140
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094A6380_094AA410.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material192
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094AAD80_094AB010.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material215
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094AB980_094ADA10.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material228
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094AE380_094AE810.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material258
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094AF180_04159180.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material260
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094AF400_094AF690.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material274
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B0000_094B0290.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material278
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B0C00_04177C00.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material284
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B0E80_094B1710.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material290
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B3280_094B4310.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material300
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B5E80_094B6710.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material315
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B7080_094B7510.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material387
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094A4380_094A4810.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material392
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B2080_094B2910.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
+newmtl vajra_carrier:material512
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.40 0.40 0.40
+Tf 1.00 1.00 1.00
+map_Kd Image094B4C80_094B5510.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00
