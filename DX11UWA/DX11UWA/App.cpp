@@ -3,6 +3,10 @@
 
 #include <ppltasks.h>
 
+// DLL includes
+#define switchStatement
+#include "../FBXLoader/FBXLoader.h"
+
 using namespace DX11UWA;
 
 using namespace concurrency;

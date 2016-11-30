@@ -137,9 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DX11UWA_TemporaryKey.pfx" />
-    <None Include="Assets\asteroid.obj">
-      <Filter>Assets</Filter>
-    </None>
     <None Include="Assets\SDF1.obj">
       <Filter>Assets</Filter>
     </None>
@@ -152,6 +149,7 @@
     <None Include="Assets\tomahawk2.obj">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Assets\Macross\vajra_carrier.obj" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">
@@ -187,10 +185,5 @@
     <FxCompile Include="NormMapPixelShader.hlsl">
       <Filter>Content\Shaders</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Assets\Macross\vajra_carrier.obj">
-      <Filter>Assets</Filter>
-    </Object>
   </ItemGroup>
 </Project>

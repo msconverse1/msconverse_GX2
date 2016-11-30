@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+
 using namespace DirectX;
 namespace DX11UWA
 {

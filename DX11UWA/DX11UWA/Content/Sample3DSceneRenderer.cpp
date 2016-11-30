@@ -253,215 +253,7 @@ Rendermult(0);
 
 Rendermult(1);
 
-#pragma region moved to 2
-//	// Loading is asynchronous. Only draw geometry after it's loaded.
-//	if (!m_loadingComplete)
-//	{
-//		return;
-//	}
-//
-//	auto context = m_deviceResources->GetD3DDeviceContext();
-//
-//	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_camera))));
-//
-//	// Prepare the constant buffer to send it to the graphics device.
-//	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
-//	context->UpdateSubresource1(floor_constantBufferSlight.Get(), 0, NULL, &Slightdata, 0, 0, 0);
-//	context->UpdateSubresource1(floor_constantBufferPlight.Get(), 0, NULL, &Plightdata, 0, 0, 0);
-//
-//	////////////////////////////////////////////////////////////
-//	//skybox 
-//	////////////////////////////////////////////////////////////
-//#pragma region Skybox
-//	static float rot = 0.0f;
-//	rot += 0.01f;
-//	skybox_constantBufferData = m_constantBufferData;
-//	XMMATRIX skybox_position = XMMatrixTranslation(m_camera._41,m_camera._42,m_camera._43);
-//
-//	XMMATRIX rotationY = XMMatrixRotationY(XMConvertToRadians(rot));
-//	skybox_position = XMMatrixMultiply(rotationY, skybox_position);
-//	XMStoreFloat4x4(&skybox_constantBufferData.model, XMMatrixTranspose(skybox_position));
-//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &skybox_constantBufferData, 0, 0, 0);
-//	UINT stride = sizeof(VertexPositionUVNormal);
-//	UINT offset = 0;
-//	context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
-//	// Each index is one 16-bit unsigned integer (short).
-//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//	context->IASetInputLayout(m_inputLayout_PUN.Get());
-//	// Attach our vertex shader.
-//	context->VSSetShader(skybox_vertexShader.Get(), nullptr, 0);
-//	// Send the constant buffer to the graphics device.
-//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-//	// Attach our pixel shader.
-//	context->PSSetShader(skybox_pixelShader.Get(), nullptr, 0);
-//	// create black sample state on other objects till they have there own resources
-//	context->PSSetShaderResources(0, 1, skybox_rsv.GetAddressOf());
-//	context->RSSetState(raster_state_ccw.Get());
-//	context->Draw(m_num_verts_cube, 0);
-//	context->RSSetState(raster_state_cw.Get());
-//	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-//#pragma endregion
-//
-//	ID3D11ShaderResourceView* nullsrv = nullptr;
-//	context->PSSetShaderResources(0, 1, &nullsrv);
-//	/////////////////////////////////////////////////////////////////
-//	//cube///////////////////////////////
-//	////////////////////////////////////////////////////////////////
-//#pragma region Cube
-//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
-//	// Each vertex is one instance of the VertexPositionColor struct.
-//	 stride = sizeof(VertexPositionUVNormal);
-//	 offset = 0;
-//	context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
-//	// Each index is one 16-bit unsigned integer (short).
-//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//	context->IASetInputLayout(m_inputLayout_PUN.Get());
-//	// Attach our vertex shader.
-//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
-//	// Send the constant buffer to the graphics device.
-//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-//	// Attach our pixel shader.
-//	context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
-//
-//
-//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-//	// Draw the objects.
-//	context->Draw(m_num_verts_cube, 0);
-//#pragma endregion
-//	///////////////////////////////////////////////////////////////////////
-//	// Creation for the floor
-//	////////////////////////
-//	////////Lights Setup////
-//	////////////////////////
-//
-//	/////////////////////////////////////////
-//	//moves the cube///////
-//	////////////////////////////////////////
-//#pragma region floor
-//	XMStoreFloat4x4(&m_constantBufferData.model,XMMatrixTranspose(XMMatrixTranslation(0.0f, -3.0f, 0.0f)));
-//
-//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
-//	context->UpdateSubresource1(floor_constantBufferDlight.Get(), 0, NULL, &Dlightdata, 0, 0, 0);
-//	context->UpdateSubresource1(floor_constantBufferSlight.Get(), 0, NULL, &Slightdata, 0, 0, 0);
-//	context->UpdateSubresource1(floor_constantBufferPlight.Get(), 0, NULL, &Plightdata, 0, 0, 0);
-//	stride = sizeof(VertexPositionUVNormal);
-//	offset = 0;
-//	context->IASetVertexBuffers(0, 1, floor_vertexBuffer.GetAddressOf(), &stride, &offset);
-//	context->IASetIndexBuffer(floor_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//	context->IASetInputLayout(m_inputLayout_PUN.Get());
-//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
-//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-//	context->DrawIndexed(6, 0, 0);
-//#pragma endregion
-//	//////////////////////////
-//	///Asteroid/////
-//	/////////////////////////
-//#pragma region Asteroid
-//	modelin = 10;
-//	Asteroid_arraymodel.view = m_constantBufferData.view;
-//	Asteroid_arraymodel.projection = m_constantBufferData.projection;
-//	stride = sizeof(VertexPositionUVNormalMap);
-//	// draw and update pos of asteroid
-//	for (uint32 i = 0; i < modelin; i++)
-//	{
-//	XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixIdentity());
-//	if(i == 0)
-//		XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i+2.0f, 0.0f, 0.0f)));
-//	else
-//	XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i*2.0f+2.0f, 0.0f, 0.0f)));
-//
-//	}
-//	context->UpdateSubresource1(Asteroid_constantBuffer.Get(), 0, NULL, &Asteroid_arraymodel, 0, 0, 0);
-//	context->IASetVertexBuffers(0, 1, Asteroid_vertexBuffer.GetAddressOf(), &stride, &offset);
-//	context->IASetIndexBuffer(Asteroid_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//	context->IASetInputLayout(NM_inputLayout.Get());
-//	context->VSSetShader(NM_vertexShader.Get(), nullptr, 0);
-//	context->VSSetConstantBuffers1(0, 1, Asteroid_constantBuffer.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetShader(NM_pixelShader.Get(), nullptr, 0);
-//	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
-//	context->PSSetShaderResources(1, 1, SDF1_rock_rsv.GetAddressOf());
-//
-//	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-//	context->DrawIndexedInstanced(Asteroid_indexCount,10, 0, 0, 0);
-//#pragma endregion
-//	////////////////////////////////////////////
-//	///SDF1///
-//	////////////////////////////////////////////
-//#pragma region SDF1
-//	 stride = sizeof(VertexPositionUVNormal);
-//
-//	SDF1_constantBufferData.view = m_constantBufferData.view;
-//	SDF1_constantBufferData.projection = m_constantBufferData.projection;
-//	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixIdentity());
-//	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(-20.0f, 0.0f, 0.0f)));
-//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &SDF1_constantBufferData, 0, 0, 0);
-//	context->IASetVertexBuffers(0, 1, SDF1_vertexBuffer.GetAddressOf(), &stride, &offset);
-//	context->IASetIndexBuffer(SDF1_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//	context->IASetInputLayout(m_inputLayout_PUN.Get());
-//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
-//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-//	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
-//	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-//	context->DrawIndexed(SDF1_indexCount, 0, 0);
-//#pragma endregion
-//	//////////////////////////////////////////////////////////
-//	///Cruiser/////////
-//	///////////////////////////////////////////////////////////
-//#pragma region GCruiser
-//	 stride = sizeof(VertexPositionUVNormal);
-//
-//	GCruiser_constantBufferData.view = m_constantBufferData.view;
-//	GCruiser_constantBufferData.projection = m_constantBufferData.projection;
-//	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixIdentity());
-//	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(5.0f, -5.0f, 0.0f)));
-//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GCruiser_constantBufferData, 0, 0, 0);
-//	context->IASetVertexBuffers(0, 1, GCruiser_vertexBuffer.GetAddressOf(), &stride, &offset);
-//	context->IASetIndexBuffer(GCruiser_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-//	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//	context->IASetInputLayout(m_inputLayout_PUN.Get());
-//	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
-//	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-//	context->PSSetShaderResources(0, 1, GCruiser_rock_rsv.GetAddressOf());
-//	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-//	//context->DrawIndexedInstanced(10, SDF1_indexCount, 0, 0, 0);
-//	context->DrawIndexed(GCruiser_indexCount, 0, 0);
-//	// create black sample state on other objects till they have there own resources
-//#pragma endregion
-//	////////////////////////////////////////////////////////////
-//	///GeoShader ////////////////////////
-//#pragma region GeoShader
-//	 stride = sizeof(VertexPositionUVNormal);
-//
-//	GS_constantBufferData.model = m_constantBufferData.model;
-//	GS_constantBufferData.view = m_constantBufferData.view;
-//	GS_constantBufferData.projection = m_constantBufferData.projection;
-//
-//	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GS_constantBufferData, 0, 0, 0);
-//	context->IASetVertexBuffers(0, 1, GS_vertexBuffer.GetAddressOf(), &stride, &offset);
-//	context->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
-//	context->IASetInputLayout(m_inputLayout_PUN.Get());
-//	context->GSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-//	context->GSSetShader(GS_GeoShader.Get(), nullptr, 0);
-//	context->VSSetShader(GS_vertShader.Get(), nullptr, 0);
-//	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-//	context->Draw(m_que_verts, 0);
-//#pragma endregion
-//
-//	ID3D11GeometryShader* geonullsrv = nullptr;
-//	context->GSSetShader(geonullsrv, nullptr, NULL);
-//	context->PSSetShaderResources(0, 1, &nullsrv);
-#pragma endregion
+
 }
 void Sample3DSceneRenderer::Rendermult(int passedscreen)
 {
@@ -521,27 +313,27 @@ void Sample3DSceneRenderer::Rendermult(int passedscreen)
 	//cube///////////////////////////////
 	////////////////////////////////////////////////////////////////
 #pragma region Cube
-	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
-	// Each vertex is one instance of the VertexPositionColor struct.
-	stride = sizeof(VertexPositionUVNormal);
-	offset = 0;
-	context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
-	// Each index is one 16-bit unsigned integer (short).
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(m_inputLayout_PUN.Get());
-	// Attach our vertex shader.
-	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
-	// Send the constant buffer to the graphics device.
-	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	// Attach our pixel shader.
-	context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
-	context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
-	context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
+	//context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0, 0);
+	//// Each vertex is one instance of the VertexPositionColor struct.
+	//stride = sizeof(VertexPositionUVNormal);
+	//offset = 0;
+	//context->IASetVertexBuffers(0, 1, m_vertexBuffer_new_Cube.GetAddressOf(), &stride, &offset);
+	//// Each index is one 16-bit unsigned integer (short).
+	//context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//context->IASetInputLayout(m_inputLayout_PUN.Get());
+	//// Attach our vertex shader.
+	//context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
+	//// Send the constant buffer to the graphics device.
+	//context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
+	//// Attach our pixel shader.
+	//context->PSSetConstantBuffers1(0, 1, floor_constantBufferDlight.GetAddressOf(), nullptr, nullptr);
+	//context->PSSetConstantBuffers1(1, 1, floor_constantBufferPlight.GetAddressOf(), nullptr, nullptr);
+	//context->PSSetConstantBuffers1(2, 1, floor_constantBufferSlight.GetAddressOf(), nullptr, nullptr);
 
 
-	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-	// Draw the objects.
-	context->Draw(m_num_verts_cube, 0);
+	//context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
+	//// Draw the objects.
+	//context->Draw(m_num_verts_cube, 0);
 #pragma endregion
 	///////////////////////////////////////////////////////////////////////
 	// Creation for the floor
@@ -575,138 +367,7 @@ void Sample3DSceneRenderer::Rendermult(int passedscreen)
 	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
 	context->DrawIndexed(6, 0, 0);
 #pragma endregion
-	//////////////////////////
-	///Asteroid/////
-	/////////////////////////
-#pragma region Asteroid
-	modelin = 10;
-	Asteroid_arraymodel.view = m_constantBufferData.view;
-	Asteroid_arraymodel.projection = m_constantBufferData.projection;
-	stride = sizeof(VertexPositionUVNormalMap);
-	// draw and update pos of asteroid
-	for (uint32 i = 0; i < modelin; i++)
-	{
-		XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixIdentity());
-		if (i == 0)
-			XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i + 2.0f, 0.0f, 0.0f)));
-		else
-			XMStoreFloat4x4(&Asteroid_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i*2.0f + 2.0f, 0.0f, 0.0f)));
 
-	}
-	context->UpdateSubresource1(Asteroid_constantBuffer.Get(), 0, NULL, &Asteroid_arraymodel, 0, 0, 0);
-	context->IASetVertexBuffers(0, 1, Asteroid_vertexBuffer.GetAddressOf(), &stride, &offset);
-	context->IASetIndexBuffer(Asteroid_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(NM_inputLayout.Get());
-	context->VSSetShader(NM_vertexShader.Get(), nullptr, 0);
-	context->VSSetConstantBuffers1(0, 1, Asteroid_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	context->PSSetShader(NM_pixelShader.Get(), nullptr, 0);
-	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
-	context->PSSetShaderResources(1, 1, SDF1_rock_rsv.GetAddressOf());
-
-	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-	context->DrawIndexedInstanced(Asteroid_indexCount, 10, 0, 0, 0);
-#pragma endregion
-	////////////////////////////////////////////
-	///SDF1///
-	////////////////////////////////////////////
-#pragma region SDF1
-	stride = sizeof(VertexPositionUVNormal);
-
-	SDF1_constantBufferData.view = m_constantBufferData.view;
-	SDF1_constantBufferData.projection = m_constantBufferData.projection;
-	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixIdentity());
-	XMStoreFloat4x4(&SDF1_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(-20.0f, 0.0f, 0.0f)));
-	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &SDF1_constantBufferData, 0, 0, 0);
-	context->IASetVertexBuffers(0, 1, SDF1_vertexBuffer.GetAddressOf(), &stride, &offset);
-	context->IASetIndexBuffer(SDF1_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(m_inputLayout_PUN.Get());
-	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
-	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-	context->PSSetShaderResources(0, 1, asteriod_rock_rsv.GetAddressOf());
-	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-	context->DrawIndexed(SDF1_indexCount, 0, 0);
-#pragma endregion
-	////////////////////////
-	///////////
-	///////////////////////
-#pragma region Tomahawk
-	stride = sizeof(VertexPositionUVNormalMap);
-	for (uint32 i = 0; i < 1; i++)
-	{
-		XMStoreFloat4x4(&Tomahawk_arraymodel.model[i], XMMatrixIdentity());
-	    XMStoreFloat4x4(&Tomahawk_arraymodel.model[i], XMMatrixTranspose(XMMatrixTranslation(i + 2.0f, 0.0f, 0.0f)));
-		
-	}
-	Tomahawk_constantBufferData.view = m_constantBufferData.view;
-	Tomahawk_constantBufferData.projection = m_constantBufferData.projection;
-	XMStoreFloat4x4(&Tomahawk_constantBufferData.model, XMMatrixIdentity());
-	XMStoreFloat4x4(&Tomahawk_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(0.0f, 0.0f, 0.0f)));
-	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &Tomahawk_constantBufferData, 0, 0, 0);
-	context->IASetVertexBuffers(0, 1, Tomahawk_vertexBuffer.GetAddressOf(), &stride, &offset);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(Tomahawk_inputLayout.Get());
-	context->VSSetShader(Tomahawk_vertexShader.Get(), nullptr, 0);
-	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-	for (UINT i = 0; i < Num0fMeshes; i++)
-	{
-	context->IASetIndexBuffer(Tomahawk_indexBuffer[i].Get(), DXGI_FORMAT_R32_UINT, 0);
-	context->PSSetShaderResources(0, 1, Tomahawk_rsv[0].GetAddressOf());
-	context->DrawIndexedInstanced(Tomahawk_indexCount,1, 0, 0,0);
-
-	}
-#pragma endregion
-	//////////////////////////////////////////////////////////
-	///Cruiser/////////
-	///////////////////////////////////////////////////////////
-#pragma region GCruiser
-	stride = sizeof(VertexPositionUVNormal);
-
-	GCruiser_constantBufferData.view = m_constantBufferData.view;
-	GCruiser_constantBufferData.projection = m_constantBufferData.projection;
-	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixIdentity());
-	XMStoreFloat4x4(&GCruiser_constantBufferData.model, XMMatrixTranspose(XMMatrixTranslation(5.0f, -5.0f, 0.0f)));
-	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GCruiser_constantBufferData, 0, 0, 0);
-	context->IASetVertexBuffers(0, 1, GCruiser_vertexBuffer.GetAddressOf(), &stride, &offset);
-	context->IASetIndexBuffer(GCruiser_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(m_inputLayout_PUN.Get());
-	context->VSSetShader(m_vertexShader_PUN.Get(), nullptr, 0);
-	context->VSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-	context->PSSetShaderResources(0, 1, GCruiser_rock_rsv.GetAddressOf());
-	context->PSSetSamplers(0, 1, sampler_state.GetAddressOf());
-	
-	context->DrawIndexed(GCruiser_indexCount, 0, 0);
-	
-#pragma endregion
-	////////////////////////////////////////////////////////////
-	///GeoShader ////////////////////////
-#pragma region GeoShader
-	stride = sizeof(VertexPositionUVNormal);
-
-	//GS_constantBufferData.model = m_constantBufferData.model;
-	GS_constantBufferData.view = m_constantBufferData.view;
-	GS_constantBufferData.projection = m_constantBufferData.projection;
-	XMStoreFloat4x4(&GS_constantBufferData.model, XMMatrixIdentity());
-	context->UpdateSubresource1(m_constantBuffer.Get(), 0, NULL, &GS_constantBufferData, 0, 0, 0);
-	context->IASetVertexBuffers(0, 1, GS_vertexBuffer.GetAddressOf(), &stride, &offset);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
-	context->IASetInputLayout(m_inputLayout_PUN.Get());
-	context->GSSetConstantBuffers1(0, 1, m_constantBuffer.GetAddressOf(), nullptr, nullptr);
-	context->GSSetShader(GS_GeoShader.Get(), nullptr, 0);
-	context->VSSetShader(GS_vertShader.Get(), nullptr, 0);
-	context->PSSetShader(m_pixelShader_PUN.Get(), nullptr, 0);
-	context->Draw(m_que_verts, 0);
-#pragma endregion
-
-	ID3D11GeometryShader* geonullsrv = nullptr;
-	context->GSSetShader(geonullsrv, nullptr, NULL);
-	context->PSSetShaderResources(0, 1, &nullsrv);
 }
 
 void Sample3DSceneRenderer::CreateDeviceDependentResources(void)
